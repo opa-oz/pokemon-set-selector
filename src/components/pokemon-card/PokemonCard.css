@@ -1,0 +1,41 @@
+.PokemonCard {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+}
+
+.PokemonCard:hover .PokemonCard-image_container,
+.PokemonCard:hover label {
+  background: var(--main-text-color);
+  border-color: var(--active-text-color) !important;
+}
+
+.PokemonCard-image_container {
+  display: flex;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+  background: var(--secondary-bg-color);
+  transition: all 0.3s linear;
+  overflow: hidden;
+  border: 2px solid var(--highlight-color);
+}
+
+.PokemonCard-image_container img {
+  width: 100px;
+  height: 100px;
+}
+
+.ProfileCard-tooltip {
+  color: var(--highlight-color);
+}
+
+.PokemonCard-checkbox_container {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  pointer-events: none;
+}

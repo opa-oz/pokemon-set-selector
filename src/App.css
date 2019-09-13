@@ -1,0 +1,40 @@
+:root {
+  --main-bg-color: #114b5f;
+  --main-text-color: #6b2737;
+  --secondary-bg-color: #456990;
+  --highlight-color: #e4fde1;
+  --active-text-color: #f45b69;
+  --checked-color: #66bb6a;
+}
+
+.App {
+  text-align: center;
+  background-color: var(--main-bg-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--highlight-color);
+}
+
+.App-header {
+  display: flex;
+}
+
+.App-link {
+  color: var(--active-text-color);
+}
+
+.App-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.App-container {
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 2vw;
+}
