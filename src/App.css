@@ -17,6 +17,19 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: var(--highlight-color);
+  position: relative;
+}
+
+.App-langpicker {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #fff;
+  border-radius: 3px;
+}
+
+.App-langpicker > div {
+  display: block;
 }
 
 .App-header {
