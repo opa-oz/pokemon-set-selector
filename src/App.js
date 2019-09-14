@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ReactFlagsSelect from 'react-flags-select';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 import PokemonCard from './components/pokemon-card/PokemonCard';
 import pokemonListRaw from './resources/pokemon/pokedex.json';
@@ -9,11 +10,33 @@ import 'react-flags-select/css/react-flags-select.css';
 
 const images = require.context('./resources/pokemon/thumbnails', true);
 
+const LANGUAGES = {
+	US: 'US',
+	JP: 'JP',
+	CN: 'CN',
+};
+const LANGUAGE_OPTIONS = [
+	{ value: LANGUAGES.US, label: '🇺🇸 USA' },
+	{ value: LANGUAGES.JP, label: '🇯🇵 Japan' },
+	{ value: LANGUAGES.CN, label: '🇨🇳 China' },
+];
+
+const SORT_METHODS = {
+	ID: 'ID',
+	NAME: 'Name',
+};
+
+const SORT_OPTIONS = [
+	{ value: SORT_METHODS.ID, label: 'Sort by ID' },
+	{ value: SORT_METHODS.NAME, label: 'Sort by Name' },
+];
+
 function App() {
 	const [isReady, setReady] = useState(false);
 	const [pokemonList, setPokemonList] = useState([]);
 	const [selectedSet, setSelectedSet] = useState(new Set());
-	const [language, setLanguage] = useState('US');
+	const [language, setLanguage] = useState(LANGUAGES.US);
+	const [sortMethod, setSortMethod] = useState(SORT_METHODS.ID);
 
 	useEffect(() => {
 		if (isReady) {
@@ -38,9 +61,9 @@ function App() {
 			list.push({
 				id,
 				name: {
-					US: english,
-					JP: japanese,
-					CN: chinese,
+					[LANGUAGES.US]: english,
+					[LANGUAGES.JP]: japanese,
+					[LANGUAGES.CN]: chinese,
 				},
 			});
 		});
@@ -58,24 +81,52 @@ function App() {
 		}
 	};
 
-	const handleSelect = lg => {
-		setLanguage(lg);
+	const handleSelectLanguage = ({ value }) => {
+		setLanguage(value);
+	};
+
+	const handleSelectSortMethod = ({ value }) => {
+		setSortMethod(value);
+	};
+
+	const sortCompareFunction = (pokemonA, pokemonB) => {
+		if (sortMethod === SORT_METHODS.ID) {
+			return parseInt(pokemonA.id, 10) - parseInt(pokemonB.id, 10);
+		} else if (sortMethod === SORT_METHODS.NAME) {
+			if (pokemonA.name[language] > pokemonB.name[language]) {
+				return 1;
+			}
+			if (pokemonA.name[language] < pokemonB.name[language]) {
+				return -1;
+			}
+
+			return 0;
+		}
+
+		return 0;
 	};
 
 	return (
 		<div className="App">
 			<div className="App-langpicker">
-				<ReactFlagsSelect
-					onSelect={handleSelect}
-					defaultCountry="US"
-					countries={['US', 'JP', 'CN']}
+				<Dropdown
+					onChange={handleSelectLanguage}
+					value={language}
+					options={LANGUAGE_OPTIONS}
+				/>
+			</div>
+			<div className="App-sortpicker">
+				<Dropdown
+					onChange={handleSelectSortMethod}
+					value={sortMethod}
+					options={SORT_OPTIONS}
 				/>
 			</div>
 			<div className="App-selected-size">Selected: {selectedSet.size}</div>
 			<main className="App-body">
 				<div className="App-controls"></div>
 				<div className="App-container">
-					{pokemonList.map(({ id, name }, key) => (
+					{pokemonList.sort(sortCompareFunction).map(({ id, name }, key) => (
 						<PokemonCard
 							id={id}
 							key={id}

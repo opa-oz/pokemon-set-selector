@@ -20,16 +20,20 @@
   position: relative;
 }
 
-.App-langpicker {
+.App-langpicker,
+.App-sortpicker {
   position: absolute;
   top: 12px;
-  left: 12px;
   background: #fff;
   border-radius: 3px;
 }
 
-.App-langpicker > div {
-  display: block;
+.App-langpicker {
+  left: 12px;
+}
+
+.App-sortpicker {
+  right: 12px;
 }
 
 .App-header {
