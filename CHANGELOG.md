@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/opa-oz/pokemon-set-selector/compare/v0.1.2...v0.1.3) (2019-09-14)
+
+
+### Features
+
+* **optimisation:** optimisation improvements ([34c4ba0](https://github.com/opa-oz/pokemon-set-selector/commit/34c4ba0))
+* **search:** implemented search ([e473d9c](https://github.com/opa-oz/pokemon-set-selector/commit/e473d9c))
+* **sort:** added sort order ASC|DESC ([c84f5a3](https://github.com/opa-oz/pokemon-set-selector/commit/c84f5a3))
+* **styles:** implemented SCSS ([d16ea3d](https://github.com/opa-oz/pokemon-set-selector/commit/d16ea3d))
+
 ### [0.1.2](https://github.com/opa-oz/pokemon-set-selector/compare/v0.1.1...v0.1.2) (2019-09-14)
 
 
