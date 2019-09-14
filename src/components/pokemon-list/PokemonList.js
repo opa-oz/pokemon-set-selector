@@ -11,16 +11,21 @@ const PokemonList = React.memo(props => {
 		language,
 		handlePokemonCheck,
 		selectedSet = new Set(),
+		disableAllAnimations,
 	} = props;
 
 	return (
-		<FlipMove className="App-container" duration={1500}>
+		<FlipMove
+			className="App-container"
+			duration={1500}
+			disableAllAnimations={disableAllAnimations}
+		>
 			{list.map(({ id, name }, key) => (
 				<div key={id}>
 					<PokemonCard
 						id={id}
 						key={id}
-						isFirst={key === 0}
+						isFirst={key === list.length - 1}
 						name={name[language]}
 						images={images}
 						isSelected={selectedSet.has(id)}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from 'react-dropdown';
 
 import 'react-dropdown/style.css';
@@ -12,6 +12,7 @@ import {
 	SORT_ORDER,
 	SORT_ORDER_OPTIONS,
 	LANGUAGE_OPTIONS,
+	SHOW_PER_PAGE,
 } from './consants';
 import SearchInput from './components/search-input/SearchInput';
 import PokemonList from './components/pokemon-list/PokemonList.js';
@@ -27,9 +28,12 @@ function App() {
 	const [language, setLanguage] = useState(LANGUAGES.US);
 	const [sortMethod, setSortMethod] = useState(SORT_METHODS.ID);
 	const [sortOrder, setSortOrder] = useState(SORT_ORDER.ASC);
-	const [searchText, setSearchText] = useState('');
 	const [searchIds, setSearchIds] = useState(new Set());
-	const debouncedSearchText = useDebounce(searchText, 200);
+	const [searchText, setSearchText] = useState('');
+	const [showCount, setShowCount] = useState(SHOW_PER_PAGE);
+	const [disableAllAnimations, setDisabledAllAnimations] = useState(false);
+
+	const dSearchText = useDebounce(searchText, 100);
 
 	useEffect(() => {
 		if (isReady) {
@@ -62,26 +66,30 @@ function App() {
 		});
 
 		setPokemonList(list);
+		setShowCount(pokemonList.length);
 		setReady(true);
-	}, [isReady]);
+	}, [isReady, pokemonList]);
 
 	useEffect(() => {
-		console.log(debouncedSearchText);
-		if (debouncedSearchText) {
+		if (dSearchText) {
 			let newSet = new Set();
 			pokemonList.forEach(({ id, name }) => {
 				const currentName = name[language].toLowerCase();
 
-				if (currentName.includes(debouncedSearchText.toLowerCase().trim())) {
+				if (currentName.includes(dSearchText.toLowerCase().trim())) {
 					newSet = newSet.add(id);
 				}
 			});
 
 			setSearchIds(newSet);
+			setShowCount(SHOW_PER_PAGE);
+			setTimeout(() => setDisabledAllAnimations(true), 1000);
+			setTimeout(() => setDisabledAllAnimations(false), 1100);
 		} else {
 			setSearchIds(new Set());
+			setShowCount(pokemonList.length);
 		}
-	}, [debouncedSearchText, language, pokemonList]);
+	}, [dSearchText, pokemonList, language]);
 
 	const handlePokemonCheck = (id, checked) => {
 		if (checked) {
@@ -154,17 +162,16 @@ function App() {
 			<main className="App-body">
 				{isReady ? (
 					<div className="App-controls">
-						<SearchInput initialValue={searchText} onChange={setSearchText} />
+						<SearchInput onSearch={setSearchText} />
 					</div>
 				) : null}
 				<PokemonList
 					list={pokemonList
-						.filter(
-							({ id }) => debouncedSearchText.length === 0 || searchIds.has(id)
-						)
+						.filter(({ id }) => searchIds.size === 0 || searchIds.has(id))
 						.sort(sortCompareFunction)
-						.slice(0, 30)}
+						.slice(0, showCount)}
 					language={language}
+					disableAllAnimations={disableAllAnimations}
 					selectedSet={selectedSet}
 					handlePokemonCheck={handlePokemonCheck}
 				/>

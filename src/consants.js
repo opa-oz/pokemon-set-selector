@@ -47,3 +47,5 @@ export const SORT_OPTIONS = [
 	{ value: SORT_METHODS.ID, label: 'Sort by ID' },
 	{ value: SORT_METHODS.NAME, label: 'Sort by Name' },
 ];
+
+export const SHOW_PER_PAGE = 70;
