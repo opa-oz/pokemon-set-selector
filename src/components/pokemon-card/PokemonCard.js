@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 
 import RoundCheckbox from '../round-checkbox/RoundCheckox';
-import './PokemonCard.css';
+import './PokemonCard.scss';
 
 function PokemonCard(props) {
 	const {

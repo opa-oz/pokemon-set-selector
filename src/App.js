@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Dropdown from 'react-dropdown';
 import FlipMove from 'react-flip-move';
+
 import 'react-dropdown/style.css';
+import 'react-flags-select/css/react-flags-select.css';
 
 import PokemonCard from './components/pokemon-card/PokemonCard';
 import pokemonListRaw from './resources/pokemon/pokedex.json';
 
-import './App.css';
-import './components/Dropdown.css';
-import 'react-flags-select/css/react-flags-select.css';
+import './App.scss';
+import './components/Dropdown.scss';
 
 const images = require.context('./resources/pokemon/thumbnails', true);
 

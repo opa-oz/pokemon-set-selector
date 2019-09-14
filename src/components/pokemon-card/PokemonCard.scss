@@ -1,0 +1,43 @@
+.PokemonCard {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    .PokemonCard-image_container,
+    label {
+      background: var(--main-text-color);
+      border-color: var(--active-text-color);
+    }
+  }
+
+  &-image_container {
+    display: flex;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary-bg-color);
+    transition: all 0.3s linear;
+    overflow: hidden;
+    border: 2px solid var(--highlight-color);
+
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  &-tooltip {
+    color: var(--highlight-color);
+  }
+
+  &-checkbox_container {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    pointer-events: none;
+  }
+}

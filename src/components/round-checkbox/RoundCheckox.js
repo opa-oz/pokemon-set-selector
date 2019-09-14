@@ -1,5 +1,5 @@
 import React from 'react';
-import './RoundCheckbox.css';
+import './RoundCheckbox.scss';
 
 function RoundCheckbox(props) {
 	const { isChecked = false, onChange = () => true, id } = props;
