@@ -17,9 +17,11 @@ import {
 import SearchInput from './components/search-input/SearchInput';
 import PokemonList from './components/pokemon-list/PokemonList.js';
 import useDebounce from './utils/debounce-hook.js';
+import { exportAsCSVFile, exportAsJSONFile } from './utils/export-as';
 
 import './App.scss';
 import './components/Dropdown.scss';
+import ExportButton from './components/export-button/ExportButton.js';
 
 function App() {
 	const [isReady, setReady] = useState(false);
@@ -158,6 +160,26 @@ function App() {
 			<div className="App-selected-size">
 				<div>Total: {pokemonList.length}</div>
 				<div>Selected: {selectedSet.size}</div>
+			</div>
+			<div className="App-exports">
+				<ExportButton
+					title="CSV"
+					exportFunction={() =>
+						exportAsCSVFile(
+							[...selectedSet].map(id => ({ id })),
+							'favourite-poks'
+						)
+					}
+				/>
+				<ExportButton
+					title="JSON"
+					exportFunction={() =>
+						exportAsJSONFile(
+							[...selectedSet].map(id => ({ id })),
+							'favourite-poks'
+						)
+					}
+				/>
 			</div>
 			<main className="App-body">
 				{isReady ? (

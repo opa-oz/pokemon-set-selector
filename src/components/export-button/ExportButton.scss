@@ -1,0 +1,23 @@
+.ExportButton {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  padding: 5px;
+  border-radius: 50%;
+  background: var(--secondary-bg-color);
+  border: 2px solid var(--highlight-color);
+  transition: all 0.3s linear;
+  color: var(--highlight-color);
+  opacity: 0.4;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 5px;
+
+  &:hover {
+    background: var(--main-text-color);
+    border-color: var(--active-text-color);
+    opacity: 1;
+  }
+}

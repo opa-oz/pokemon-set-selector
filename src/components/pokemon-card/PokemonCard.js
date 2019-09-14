@@ -22,7 +22,7 @@ const PokemonCard = React.memo(props => {
 			className="PokemonCard"
 		>
 			<div className="PokemonCard-image_container">
-				<img src={images(`./${id}.png`)} alt="name" />
+				<img src={images(`./${id}.png`)} alt={name} />
 			</div>
 			<div className="PokemonCard-checkbox_container">
 				<RoundCheckbox isChecked={isSelected} id={id} />
