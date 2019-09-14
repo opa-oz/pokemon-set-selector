@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Dropdown from 'react-dropdown';
+import FlipMove from 'react-flip-move';
 import 'react-dropdown/style.css';
 
 import PokemonCard from './components/pokemon-card/PokemonCard';
 import pokemonListRaw from './resources/pokemon/pokedex.json';
 
 import './App.css';
+import './components/Dropdown.css';
 import 'react-flags-select/css/react-flags-select.css';
 
 const images = require.context('./resources/pokemon/thumbnails', true);
@@ -113,6 +115,9 @@ function App() {
 					onChange={handleSelectLanguage}
 					value={language}
 					options={LANGUAGE_OPTIONS}
+					className="Dropdown"
+					controlClassName="Dropdown-control"
+					menuClassName="Dropdown-menu"
 				/>
 			</div>
 			<div className="App-sortpicker">
@@ -125,19 +130,21 @@ function App() {
 			<div className="App-selected-size">Selected: {selectedSet.size}</div>
 			<main className="App-body">
 				<div className="App-controls"></div>
-				<div className="App-container">
+				<FlipMove className="App-container">
 					{pokemonList.sort(sortCompareFunction).map(({ id, name }, key) => (
-						<PokemonCard
-							id={id}
-							key={id}
-							isFirst={key === 0}
-							name={name[language]}
-							images={images}
-							isSelected={selectedSet.has(id)}
-							onChange={checked => handlePokemonCheck(id, checked)}
-						/>
+						<div key={id}>
+							<PokemonCard
+								id={id}
+								key={id}
+								isFirst={key === 0}
+								name={name[language]}
+								images={images}
+								isSelected={selectedSet.has(id)}
+								onChange={checked => handlePokemonCheck(id, checked)}
+							/>
+						</div>
 					))}
-				</div>
+				</FlipMove>
 			</main>
 		</div>
 	);
