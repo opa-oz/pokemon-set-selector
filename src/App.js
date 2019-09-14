@@ -71,7 +71,7 @@ function App() {
 					countries={['US', 'JP', 'CN']}
 				/>
 			</div>
-			<header className="App-header">Create you favourite Pokemons!</header>
+			<div className="App-selected-size">Selected: {selectedSet.size}</div>
 			<main className="App-body">
 				<div className="App-controls"></div>
 				<div className="App-container">
