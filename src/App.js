@@ -12,6 +12,16 @@ import 'react-flags-select/css/react-flags-select.css';
 
 const images = require.context('./resources/pokemon/thumbnails', true);
 
+const SORT_ORDER = {
+	ASC: '1',
+	DESC: '-1',
+};
+
+const SORT_ORDER_OPTIONS = [
+	{ value: SORT_ORDER.ASC, label: 'ASC' },
+	{ value: SORT_ORDER.DESC, label: 'DESC' },
+];
+
 const LANGUAGES = {
 	US: 'US',
 	JP: 'JP',
@@ -39,6 +49,7 @@ function App() {
 	const [selectedSet, setSelectedSet] = useState(new Set());
 	const [language, setLanguage] = useState(LANGUAGES.US);
 	const [sortMethod, setSortMethod] = useState(SORT_METHODS.ID);
+	const [sortOrder, setSortOrder] = useState(SORT_ORDER.ASC);
 
 	useEffect(() => {
 		if (isReady) {
@@ -91,15 +102,21 @@ function App() {
 		setSortMethod(value);
 	};
 
+	const handleSelectSortOrder = ({ value }) => {
+		setSortOrder(parseInt(value, 10));
+	};
+
 	const sortCompareFunction = (pokemonA, pokemonB) => {
 		if (sortMethod === SORT_METHODS.ID) {
-			return parseInt(pokemonA.id, 10) - parseInt(pokemonB.id, 10);
+			return (
+				(parseInt(pokemonA.id, 10) - parseInt(pokemonB.id, 10)) * sortOrder
+			);
 		} else if (sortMethod === SORT_METHODS.NAME) {
 			if (pokemonA.name[language] > pokemonB.name[language]) {
-				return 1;
+				return 1 * sortOrder;
 			}
 			if (pokemonA.name[language] < pokemonB.name[language]) {
-				return -1;
+				return -1 * sortOrder;
 			}
 
 			return 0;
@@ -126,11 +143,16 @@ function App() {
 					value={sortMethod}
 					options={SORT_OPTIONS}
 				/>
+				<Dropdown
+					onChange={handleSelectSortOrder}
+					value={`${sortOrder}`}
+					options={SORT_ORDER_OPTIONS}
+				/>
 			</div>
 			<div className="App-selected-size">Selected: {selectedSet.size}</div>
 			<main className="App-body">
 				<div className="App-controls"></div>
-				<FlipMove className="App-container">
+				<FlipMove className="App-container" duration={1500}>
 					{pokemonList.sort(sortCompareFunction).map(({ id, name }, key) => (
 						<div key={id}>
 							<PokemonCard
