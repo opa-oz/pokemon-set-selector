@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/opa-oz/pokemon-set-selector/compare/v0.1.3...v1.0.0) (2019-09-14)
+
+
+### Build System
+
+* **pages:** added deploy to github pages ([ad7b3e9](https://github.com/opa-oz/pokemon-set-selector/commit/ad7b3e9))
+
+
+### Features
+
+* **docs:** filled up Readme.md ([8db2d18](https://github.com/opa-oz/pokemon-set-selector/commit/8db2d18))
+* **usability:** implemented export to JSON and CSV ([adfec14](https://github.com/opa-oz/pokemon-set-selector/commit/adfec14))
+
 ### [0.1.3](https://github.com/opa-oz/pokemon-set-selector/compare/v0.1.2...v0.1.3) (2019-09-14)
 
 
