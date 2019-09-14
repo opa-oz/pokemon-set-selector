@@ -1,48 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Dropdown from 'react-dropdown';
-import FlipMove from 'react-flip-move';
 
 import 'react-dropdown/style.css';
 import 'react-flags-select/css/react-flags-select.css';
 
-import PokemonCard from './components/pokemon-card/PokemonCard';
 import pokemonListRaw from './resources/pokemon/pokedex.json';
+import {
+	LANGUAGES,
+	SORT_METHODS,
+	SORT_OPTIONS,
+	SORT_ORDER,
+	SORT_ORDER_OPTIONS,
+	LANGUAGE_OPTIONS,
+} from './consants';
+import SearchInput from './components/search-input/SearchInput';
+import PokemonList from './components/pokemon-list/PokemonList.js';
+import useDebounce from './utils/debounce-hook.js';
 
 import './App.scss';
 import './components/Dropdown.scss';
-
-const images = require.context('./resources/pokemon/thumbnails', true);
-
-const SORT_ORDER = {
-	ASC: '1',
-	DESC: '-1',
-};
-
-const SORT_ORDER_OPTIONS = [
-	{ value: SORT_ORDER.ASC, label: 'ASC' },
-	{ value: SORT_ORDER.DESC, label: 'DESC' },
-];
-
-const LANGUAGES = {
-	US: 'US',
-	JP: 'JP',
-	CN: 'CN',
-};
-const LANGUAGE_OPTIONS = [
-	{ value: LANGUAGES.US, label: '🇺🇸 USA' },
-	{ value: LANGUAGES.JP, label: '🇯🇵 Japan' },
-	{ value: LANGUAGES.CN, label: '🇨🇳 China' },
-];
-
-const SORT_METHODS = {
-	ID: 'ID',
-	NAME: 'Name',
-};
-
-const SORT_OPTIONS = [
-	{ value: SORT_METHODS.ID, label: 'Sort by ID' },
-	{ value: SORT_METHODS.NAME, label: 'Sort by Name' },
-];
 
 function App() {
 	const [isReady, setReady] = useState(false);
@@ -51,6 +27,9 @@ function App() {
 	const [language, setLanguage] = useState(LANGUAGES.US);
 	const [sortMethod, setSortMethod] = useState(SORT_METHODS.ID);
 	const [sortOrder, setSortOrder] = useState(SORT_ORDER.ASC);
+	const [searchText, setSearchText] = useState('');
+	const [searchIds, setSearchIds] = useState(new Set());
+	const debouncedSearchText = useDebounce(searchText, 200);
 
 	useEffect(() => {
 		if (isReady) {
@@ -85,6 +64,24 @@ function App() {
 		setPokemonList(list);
 		setReady(true);
 	}, [isReady]);
+
+	useEffect(() => {
+		console.log(debouncedSearchText);
+		if (debouncedSearchText) {
+			let newSet = new Set();
+			pokemonList.forEach(({ id, name }) => {
+				const currentName = name[language].toLowerCase();
+
+				if (currentName.includes(debouncedSearchText.toLowerCase().trim())) {
+					newSet = newSet.add(id);
+				}
+			});
+
+			setSearchIds(newSet);
+		} else {
+			setSearchIds(new Set());
+		}
+	}, [debouncedSearchText, language, pokemonList]);
 
 	const handlePokemonCheck = (id, checked) => {
 		if (checked) {
@@ -150,24 +147,27 @@ function App() {
 					options={SORT_ORDER_OPTIONS}
 				/>
 			</div>
-			<div className="App-selected-size">Selected: {selectedSet.size}</div>
+			<div className="App-selected-size">
+				<div>Total: {pokemonList.length}</div>
+				<div>Selected: {selectedSet.size}</div>
+			</div>
 			<main className="App-body">
-				<div className="App-controls"></div>
-				<FlipMove className="App-container" duration={1500}>
-					{pokemonList.sort(sortCompareFunction).map(({ id, name }, key) => (
-						<div key={id}>
-							<PokemonCard
-								id={id}
-								key={id}
-								isFirst={key === 0}
-								name={name[language]}
-								images={images}
-								isSelected={selectedSet.has(id)}
-								onChange={checked => handlePokemonCheck(id, checked)}
-							/>
-						</div>
-					))}
-				</FlipMove>
+				{isReady ? (
+					<div className="App-controls">
+						<SearchInput initialValue={searchText} onChange={setSearchText} />
+					</div>
+				) : null}
+				<PokemonList
+					list={pokemonList
+						.filter(
+							({ id }) => debouncedSearchText.length === 0 || searchIds.has(id)
+						)
+						.sort(sortCompareFunction)
+						.slice(0, 30)}
+					language={language}
+					selectedSet={selectedSet}
+					handlePokemonCheck={handlePokemonCheck}
+				/>
 			</main>
 		</div>
 	);

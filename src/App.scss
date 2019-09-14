@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   font-size: calc(10px + 2vmin);
   color: var(--highlight-color);
   position: relative;
@@ -51,7 +51,7 @@
   &-container {
     padding: 30px 0;
     display: grid;
-    grid-gap: 2vw;
+    grid-gap: 20px;
   }
 
   &-selected-size {
@@ -60,6 +60,11 @@
     position: fixed;
     bottom: 12px;
     left: 12px;
+    flex-direction: column;
+
+    & > div {
+      display: flex;
+    }
   }
 }
 
@@ -67,6 +72,7 @@
   /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
   .App-container {
     grid-template-columns: 1fr 1fr;
+    min-width: 268px;
   }
 }
 @media (min-width: 480px) {
@@ -76,23 +82,27 @@
   /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
   .App-container {
     grid-template-columns: 1fr 1fr 1fr;
+    min-width: 412;
   }
 }
 @media (min-width: 801px) {
   /* tablet, landscape iPad, lo-res laptops ands desktops */
   .App-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    min-width: 556;
   }
 }
 @media (min-width: 1025px) {
   /* big landscape tablets, laptops, and desktops */
   .App-container {
+    min-width: 700;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 }
 @media (min-width: 1281px) {
   /* hi-res laptops and desktops */
   .App-container {
+    min-width: 844px;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 }

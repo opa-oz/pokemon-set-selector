@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip';
 import RoundCheckbox from '../round-checkbox/RoundCheckox';
 import './PokemonCard.scss';
 
-function PokemonCard(props) {
+const PokemonCard = React.memo(props => {
 	const {
 		id,
 		name,
@@ -32,6 +32,6 @@ function PokemonCard(props) {
 			) : null}
 		</div>
 	);
-}
+});
 
 export default PokemonCard;
