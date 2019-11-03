@@ -9,7 +9,7 @@
 - 🏹 Sort the list of Pokemon by ID or Name (multilanguage)
 - ✅ Select your favourite Pokemon
 - 🗂 Export your favourite Pokemon list to CSV or JSON
-- ✨ Enjoy beatiful list's animation powered by [Flip-Move](https://github.com/joshwcomeau/react-flip-move)
+- ✨ Enjoy beautiful list's animation powered by [Flip-Move](https://github.com/joshwcomeau/react-flip-move)
 
 ## How to start
 
