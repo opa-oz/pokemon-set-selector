@@ -1,7 +1,7 @@
 {
   "name": "pokemon-set-selector",
   "description": "Choose you own Pokemon set!",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://opa-oz.github.io/pokemon-set-selector",
   "dependencies": {
     "dot-prop": "^5.1.1",
