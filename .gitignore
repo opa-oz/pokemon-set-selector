@@ -63,3 +63,4 @@ typings/
 # production
 /build
 .DS_Store
+.idea
